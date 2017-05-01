@@ -53,3 +53,15 @@ Generation du fichier Summary du RUN
 
 `Chemin/du/Script/Summary_RunQuality.sh`
 *avec le bon chemin pour aller chercher le script*
+
+
+## ETAPE 2 : Merge reads 1 et reads 2
+[Travail dans RUNX]
+
+Merge des reads avec Flash2 sur un ensemble  de fichiers contenus dans Fastq_Initiaux/
+Resultats dans Fastq_Flash2Merge/
+
+`Chemin/du/Script/FLASH2_multiple.sh`
+
+*modifier le chemin d'acces a flash2 dans le script FLASH2_multiple.sh*
+
