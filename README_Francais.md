@@ -65,3 +65,13 @@ Resultats dans Fastq_Flash2Merge/
 
 *modifier le chemin d'acces a flash2 dans le script FLASH2_multiple.sh*
 
+
+## ETAPE 3 : Tri en fonction des primers
+[Travail dans RUNX]
+
+Pour chaque fragment sequence, creer un dossier dans RUNX portant le nom du fragment correspondant (par ex "Bact_V3V4") et, dans ce dossier cree, un fichier texte Caracteristiques_Amplicons.txt qui indique les séquences des amorces forward et reverse (cf fichier Caracteristiques_Amplicons.txt fourni ici pour exemple). Pour chacun des fragments, lancer le script CUTADAPT_multiple.sh en indiquant le nom du dossier correspondant.
+
+`Chemin/du/Script/CUTADAPT_multiple.sh`
+
+*si besoin, modifier les parametres erreur -e et longueur minimum -m dans le script pour adapter au fragment etudie*
+
