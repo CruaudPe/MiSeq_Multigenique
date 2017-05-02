@@ -75,3 +75,68 @@ Pour chaque fragment sequence, creer un dossier dans RUNX portant le nom du frag
 
 *si besoin, modifier les parametres erreur -e et longueur minimum -m dans le script pour adapter au fragment etudie*
 
+## ETAPE 4 : Clusterisation en OTUs et en Swarm
+[Travail dans RUNX/FragmentSequence]
+
+*Si plusieurs analyses differentes dans le meme run, on peut creer un sous dossier pour chaque analyse et reunir les fichiers fastq correpondants (*_Trim_Filt200.fastq) dans un sous-dossier qu'on renommera Fastq_MergeFlash2_TrimPrCutadapt/*
+
+Dans le dossier RUNX ou le sous-dossier correspondant a une etude particuliere (ex : TestProtocole/), lancer le script ConvertFastqFasta.sh pour convertir les fichiers fastq en fichiers ConvertFastqFasta
+
+`Chemin/du/Script/ConvertFastqFasta.sh`
+
+L'etape suivante consiste a pooler toutes les sequences fasta en un seul fichier fasta AllSamples.fasta
+
+`Chemin/du/Script/PoolageEchantillons.sh`
+
+Avant de clusteriser en OTUs et/ou en Swarms, on passe par une etape de dereplication du jeu de donnees (avec Vsearch)
+
+`Chemin/du/Script/Dereplication.sh`
+
+Clusterisation en OTUs avec un seuil de 97% avec vsearch
+
+`Chemin/du/Script/ClusterisationVSEARCH.sh`
+
+et/ou clusterisation en SWARMs avec swarm
+
+`Chemin/du/Script/ClusterisationSWARM.sh`
+
+
+
+
+## ETAPE 5 : Elimination des singletons et des chimeres du jeu de donnees
+[Travail dans RUNX/FragmentSequence] *ou [Travail dans RUNX/FragmentSequence/EtudeParticuliere]*
+
+Elimination des singletons et des chimeres avec Vsearch pour les clusterisations OTUs et Swarms
+
+`Chemin/du/Script/VSEARCH_ChimereSingleton_Uniq.sh`
+
+
+
+## ETAPE 6 : Affiliation taxonomique des sequences
+[Travail dans RUNX/FragmentSequence] *ou [Travail dans RUNX/FragmentSequence/EtudeParticuliere]*
+
+Classification avec commande classify.seqs de Mothur
+Pour chacune des clusterisation (OTUs et Swarms) affiliation des sequences avec : 
+
+- Classification Naive Bayesienne, type RDP Classifier
+- Classification par Blast (5 premiers hits de blast pris en compte
+
+`Chemin/du/Script/Classify_Uniq.sh`
+
+**NB :** La base de donnees ainsi que son chemin peuvent etre modifies dans le script. Par default, Silva_128_NR99.pds.fasta et Silva_128_NR99.pds.tax.
+
+*modifier aussi le chemin d'acces a mothur dans le script Classify_Uniq.sh*
+
+
+
+## ETAPE 7 : Formatage des donnees de classification
+[Travail dans RUNX/FragmentSequence] *ou [Travail dans RUNX/FragmentSequence/EtudeParticuliere]*
+
+Formatage des donnees issues de l'etape de classification pour qu'elles soient facilement lisibles sous excel
+Il faut modifier le niveau taxonomique voulu directement dans le script a la ligne 52 (par default niveau taxonomique 3 *ex: Bacteria;Proteobacteria;Deltaproteobacteria*
+
+`Chemin/du/Script/Formatage_Resultats_Classification_Uniq.sh`
+
+
+
+
