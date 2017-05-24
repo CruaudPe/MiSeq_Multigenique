@@ -110,6 +110,7 @@ Elimination des singletons et des chimeres avec Vsearch pour les clusterisations
 
 `Chemin/du/Script/VSEARCH_ChimereSingleton_Uniq.sh`
 
+*Ce script integre un script R "FormatLongAFormatLarge.R" dont il faut modifier le chemin d'acces*
 
 
 ## ETAPE 6 : Affiliation taxonomique des sequences
@@ -137,6 +138,6 @@ Il faut modifier le niveau taxonomique voulu directement dans le script a la lig
 
 `Chemin/du/Script/Formatage_Resultats_Classification_Uniq.sh`
 
-
+*Ce script integre un script R "TranspositionTable.R" dont il faut modifier le chemin d'acces*
 
 
