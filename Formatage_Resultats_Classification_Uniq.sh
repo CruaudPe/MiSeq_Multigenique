@@ -49,14 +49,14 @@ sed -n '/^SAMPLE/p' TaxoTransposee.csv > EnTetes_Ech.temp
 awk -F'\t' 'FNR==NR{a[$1]=$2;next} $1 in a{print a[$1],$0}' Taxo.temp TaxoTransposee.csv > Resultats_Taxo.temp
 awk '{$2="";print $0}' Resultats_Taxo.temp > Resultats_Taxo2.temp
 
-awk -F';' '{print $1 ";" $2 ";" $3 "\t" $NF}' Resultats_Taxo2.temp > Taxo_NiveauTaxo3.temp
-sed -i -e "s/\t/ /g" Taxo_NiveauTaxo3.temp
+awk -F';' '{print $1 ";" $2 ";" $3 ";" $4 ";" $5 ";" $6 ";" $7 "\t" $NF}' Resultats_Taxo2.temp > Taxo_NiveauTaxo7.temp
+sed -i -e "s/\t/ /g" Taxo_NiveauTaxo7.temp
 
-awk -F' ' '{print $1}' Taxo_NiveauTaxo3.temp > Test2.temp
+awk -F' ' '{print $1}' Taxo_NiveauTaxo7.temp > Test2.temp
 
-NbreColonnes=$(awk -F' ' 'END {print NF}' Taxo_NiveauTaxo3.temp)
+NbreColonnes=$(awk -F' ' 'END {print NF}' Taxo_NiveauTaxo7.temp)
 
-awk '{print $2}' Taxo_NiveauTaxo3.temp > Test.temp
+awk '{print $2}' Taxo_NiveauTaxo7.temp > Test.temp
 paste Test2.temp Test.temp > Test3.temp
 awk -F'\t' '{arr[$1]+=$2}END{for (i in arr) {print i, arr[i]}}' Test3.temp > Test6.temp
 
@@ -64,7 +64,7 @@ awk -F'\t' '{arr[$1]+=$2}END{for (i in arr) {print i, arr[i]}}' Test3.temp > Tes
 for numero in `seq 3 $NbreColonnes`
     do
     #echo -e $numero
-    awk '{print $'$numero'}' Taxo_NiveauTaxo3.temp > Test.temp
+    awk '{print $'$numero'}' Taxo_NiveauTaxo7.temp > Test.temp
     paste Test2.temp Test.temp > Test3.temp
     awk '{arr[$1]+=$2}END{for (i in arr) {print i, arr[i]}}' Test3.temp > Test4.temp
     awk -F' ' '{print $2}' Test4.temp > Test5.temp

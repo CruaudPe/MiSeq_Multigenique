@@ -7,7 +7,7 @@
 #But du programme : Lancer Cutadapt sur un ensemble de fichiers contenu dans Fastq_Flash2Merge/ avec paramètres par défault : 
 #1ère étape enlever amorce forward, 2ème étape enlever amorce reverse et séquences de moins de 350 bp. Besoin d'un fichier Caracteristiques_Amplicons.txt
 #qui indique les séquences des amorces forward et reverse contenu dans un nouveau dossier au nom du gene sur lequel on travaille (ex Bacteries_V4).
-#Rester dans le dossier du RUN global pour lancer ce script. Les fichiers resultats seront dans le dossier specifique du gene analyse dans un sous-dossier $FragmentName/Fastq_Flash2Merge_TrimPrCutadapt
+#Rester dans le dossier du RUN global pour lancer ce script. Les fichiers resultats seront dans le dossier specifique du gene analyse dans un sous-dossier $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt
 
 echo -e "Nom du fragment sequence (doit correspondre au dossier contenant le fichier Caracteristiques_Amplicons.txt)"
 read FragmentName
@@ -28,7 +28,7 @@ HeureDebut=$(date +%Hh%M)
 echo -e "Heure du debut de l'analyse : $HeureDebut"
 echo -e "Heure du debut de l'analyse : $HeureDebut" >> $FragmentName/Resultats_Script_TrimPrCutadapt.txt 
 
-mkdir $FragmentName/Fastq_Flash2Merge_TrimPrCutadapt
+mkdir $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt
 
 echo -e "\nVoici les fichiers traites : \n"
 
@@ -42,18 +42,18 @@ for fichier in $(find Fastq_Flash2Merge/ -name "*.fastq.extendedFrags.fastq" -ty
 						echo -e "Sample:::$fichier" >> $FragmentName/Resultats_Script_TrimPrCutadapt.txt 
 						NvNom=$(sed s:'Fastq_Flash2Merge/':'':g <<< $fichier)
 						Output=$(sed s/".fastq.extendedFrags.fastq"/"_TrimForward.fastq"/g <<< $NvNom)
-						(cutadapt -g $Forward -e 0.15 --discard-untrimmed $fichier > $FragmentName/Fastq_Flash2Merge_TrimPrCutadapt/$Output) 2>> $FragmentName/Resultats_Script_TrimPrCutadapt.txt
+						(cutadapt -g $Forward -e 0.15 --discard-untrimmed $fichier > $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt/$Output) 2>> $FragmentName/Resultats_Script_TrimPrCutadapt.txt
 			done
 			
 echo -e "\n\n"
 
-for fichier in $(find $FragmentName/Fastq_Flash2Merge_TrimPrCutadapt/ -name "*_TrimForward.fastq" -type f)
+for fichier in $(find $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt/ -name "*_TrimForward.fastq" -type f)
 			do
 						echo -e "	$fichier"
                                                 echo -e "Sample:::$fichier" >> $FragmentName/Resultats_Script_TrimPrCutadapt.txt 
-						NvNom=$(sed s/"$FragmentName\/Fastq_Flash2Merge_TrimPrCutadapt\/"/""/g <<< $fichier)
+						NvNom=$(sed s/"$FragmentName\/Fastq_MergeFlash2_TrimPrCutadapt\/"/""/g <<< $fichier)
 						Output=$(sed s/"_TrimForward.fastq"/"_Trim_Filt200.fastq"/g <<< $NvNom)
-						(cutadapt -b $Reverse -e 0.15 -m 350 --discard-untrimmed $fichier > $FragmentName/Fastq_Flash2Merge_TrimPrCutadapt/$Output) 2>> $FragmentName/Resultats_Script_TrimPrCutadapt.txt
+						(cutadapt -b $Reverse -e 0.15 -m 400 --discard-untrimmed $fichier > $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt/$Output) 2>> $FragmentName/Resultats_Script_TrimPrCutadapt.txt
 			done
 			
 echo -e "\n\n"
