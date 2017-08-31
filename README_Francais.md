@@ -121,7 +121,7 @@ Classification avec commande classify.seqs de Mothur
 Pour chacune des clusterisation (OTUs et Swarms) affiliation des sequences avec : 
 
 - Classification Naive Bayesienne, type RDP Classifier
-- Classification par Blast (5 premiers hits de blast pris en compte
+- Classification par Blast (5 premiers hits de blast pris en compte)
 
 `Chemin/du/Script/Classify_Uniq.sh`
 
