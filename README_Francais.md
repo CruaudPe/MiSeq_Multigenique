@@ -125,7 +125,7 @@ Pour chacune des clusterisation (OTUs et Swarms) affiliation des sequences avec 
 
 `Chemin/du/Script/Classify_Uniq.sh`
 
-**NB :** La base de donnees ainsi que son chemin peuvent etre modifies dans le script. Par default, Silva_128_NR99.pds.fasta et Silva_128_NR99.pds.tax.
+**NB :** La base de donnees ainsi que son chemin peuvent etre modifies dans le script. Par default, Silva_128_NR99.pds.fasta et Silva_128_NR99.pds.tax (non fournies).
 
 *modifier aussi le chemin d'acces a mothur dans le script Classify_Uniq.sh*
 
