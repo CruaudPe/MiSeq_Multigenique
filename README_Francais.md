@@ -31,6 +31,7 @@ On va supprimer les fichiers S0 du dossier Fastq_Initiaux/ car on ne s'en servir
 [Travail dans RUNX]
 
 Dans un premier temps, on va regarder les resultats obtenus a l'issue du RUN
+
 `mkdir Bilan_Global`
 
 `cat Fastq_Initiaux/* > Bilan_Global/Global.fastq`
