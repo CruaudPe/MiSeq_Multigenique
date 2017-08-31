@@ -2,12 +2,12 @@
 
 #Nom du programme : Dereplication.sh
 #Date de création : 12 avril 2017
-#Derniere mise a jour : 1er mai 2017
+#Derniere mise a jour : 31 aout 2017
 #Auteur : Perrine Cruaud
 #But du programme : Dereplication Vsearch pour un fichier fasta avec en entree AllSamples.fasta et en sortie un fichier fasta des sequences centroides (AllSamples_Dereplic.fasta), un fichier type sortie uclust avec toutes les sequences
 #query et la sequence centroide a laquelle elles sont associees (AllSamples_Resultats_Dereplic_UC.txt), et un tableau TableauLong_Resultats_Dereplic.csv indiquant le nombre de sequences associees a chaque centroide pour chaque echantillon
 
-echo -e "\n###############################################\nDebutAnalyse\n###############################################" >  ResultatsSuivi_Dereplication.txt
+echo -e "\n###############################################\nDebutAnalyse\n###############################################" >  Suivi_Analyse/ResultatsSuivi_Dereplication.txt
 echo -e "\n###############################################\nDebutAnalyse\n###############################################"
 
 JourAnalyse=$(date +%d/%m/%Y)
@@ -17,7 +17,7 @@ HeureDebut=$(date +%Hh%M)
 #Dereplication
 Output=$(sed s/".fasta"/"_Dereplic.fasta"/g <<< AllSamples.fasta)
 OutputUC=$(sed s/".fasta"/"_Resultats_Dereplic_UC.txt"/g <<< AllSamples.fasta)
-(vsearch --derep_fulllength AllSamples.fasta --sizeout --output $Output --uc $OutputUC) 2>> ResultatsSuivi_Dereplication.txt
+(vsearch --derep_fulllength AllSamples.fasta --sizeout --output $Output --uc $OutputUC) 2>> Suivi_Analyse/ResultatsSuivi_Dereplication.txt
 
 echo -e "\n"
 
@@ -52,13 +52,13 @@ cp TableauLong3.temp TableauLong_Resultats_Dereplic.csv
 rm *.temp
 
 echo -e "Heure du debut de l'analyse : $HeureDebut"
-echo -e "Heure du debut de l'analyse : $HeureDebut" >>  ResultatsSuivi_Dereplication.txt
+echo -e "Heure du debut de l'analyse : $HeureDebut" >>  Suivi_Analyse/ResultatsSuivi_Dereplication.txt
 HeureFin=$(date +%Hh%M)
 echo -e "Heure de fin de l'analyse : $HeureFin"
-echo -e "Heure de fin de l'analyse : $HeureFin"  >>  ResultatsSuivi_Dereplication.txt
+echo -e "Heure de fin de l'analyse : $HeureFin"  >>  Suivi_Analyse/ResultatsSuivi_Dereplication.txt
 
 echo -e "\n###############################################\nFinAnalyse\n###############################################"
-echo -e "\n###############################################\nFinAnalyse\n###############################################" >>  ResultatsSuivi_Dereplication.txt
+echo -e "\n###############################################\nFinAnalyse\n###############################################" >>  Suivi_Analyse/ResultatsSuivi_Dereplication.txt
 
 
 exit			

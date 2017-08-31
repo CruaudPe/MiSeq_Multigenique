@@ -2,12 +2,12 @@
 
 #Nom du programme : ClusterisationVSEARCH.sh
 #Date de création : 12 avril 2017
-#Derniere mise a jour : 1er mai 2017
+#Derniere mise a jour : 31 aout 2017
 #Auteur : Perrine Cruaud
 #But du programme : Clusterisation en OTUs 97% Vsearch pour un fichier fasta avec en entree AllSamples_Dereplic.fasta (sortie de l'etape de dereplication) et en sortie un fichier fasta des sequences centroides
 #(AllSamples_CentroidsVsearch.fasta), un fichier type sortie uclust avec toutes les sequences query et la sequence centroide a laquelle elles sont associees (AllSamples_Dereplic_Resultats_ClustersOTUS97.txt), et un tableau TableauLong_Resultats_VSEARCHOTUs.csv indiquant le nombre de sequences associees a chaque centroide pour chaque echantillon
 
-echo -e "\n###############################################\nDebutAnalyse\n###############################################" >  ResultatsSuivi_VsearchOTUs.txt
+echo -e "\n###############################################\nDebutAnalyse\n###############################################" >  Suivi_Analyse/ResultatsSuivi_VsearchOTUs.txt
 echo -e "\n###############################################\nDebutAnalyse\n###############################################"
 
 JourAnalyse=$(date +%d/%m/%Y)
@@ -18,7 +18,7 @@ echo -e "Heure du debut de l'analyse : $HeureDebut"
 	#Clusterisation VSEARCH
             OutputCentroidsVsearch=$(sed s/"_Dereplic.fasta"/"_CentroidsVsearch.fasta"/g <<< AllSamples_Dereplic.fasta)
             OutputUC=$(sed s/".fasta"/"_Resultats_ClustersOTUS97.txt"/g <<< AllSamples_Dereplic.fasta)
-            (vsearch --cluster_size AllSamples_Dereplic.fasta --id 0.97 --sizein --sizeout --centroids $OutputCentroidsVsearch --uc $OutputUC) 2>> ResultatsSuivi_VsearchOTUs.txt
+            (vsearch --cluster_size AllSamples_Dereplic.fasta --id 0.97 --sizein --sizeout --centroids $OutputCentroidsVsearch --uc $OutputUC) 2>> Suivi_Analyse/ResultatsSuivi_VsearchOTUs.txt
             
 echo -e "\n"
 
@@ -61,13 +61,13 @@ rm *.temp
 
 
 echo -e "Heure du debut de l'analyse : $HeureDebut"
-echo -e "Heure du debut de l'analyse : $HeureDebut" >>  ResultatsSuivi_VsearchOTUs.txt
+echo -e "Heure du debut de l'analyse : $HeureDebut" >>  Suivi_Analyse/ResultatsSuivi_VsearchOTUs.txt
 HeureFin=$(date +%Hh%M)
 echo -e "Heure de fin de l'analyse : $HeureFin"
-echo -e "Heure de fin de l'analyse : $HeureFin"  >>  ResultatsSuivi_VsearchOTUs.txt
+echo -e "Heure de fin de l'analyse : $HeureFin"  >>  Suivi_Analyse/ResultatsSuivi_VsearchOTUs.txt
 
 echo -e "\n###############################################\nFinAnalyse\n###############################################"
-echo -e "\n###############################################\nFinAnalyse\n###############################################" >>  ResultatsSuivi_VsearchOTUs.txt
+echo -e "\n###############################################\nFinAnalyse\n###############################################" >>  Suivi_Analyse/ResultatsSuivi_VsearchOTUs.txt
 
 
 exit	

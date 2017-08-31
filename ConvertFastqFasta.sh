@@ -2,7 +2,7 @@
 
 #Nom du programme : ConvertFastqFasta.sh
 #Date de création : 12 avril 2017
-#Derniere mise a jour : 1er mai 2017
+#Derniere mise a jour : 31 aout 2017
 #Auteur : Perrine Cruaud
 #But du programme : Convertir fichiers fastq en fichiers fasta
 
@@ -30,6 +30,22 @@ for fichier in $(find Fastq_MergeFlash2_TrimPrCutadapt/ -name "*_Trim_Filt200.fa
                         
                         
 echo -e "\n"
+
+
+echo -e "SampleName" > SampleName.temp
+echo -e "NumberOfSequences" > NumberOfSequences.temp
+
+for fichier in $(find Fastq_MergeFlash2_TrimPrCutadapt/ -name "*_Trim_Filt200.fasta" -type f);
+			do
+						NvNom=$(sed "s/Fastq_MergeFlash2_TrimPrCutadapt\///g" <<< $fichier)
+						OutputPrefix=$(sed "s/_Trim_Filt200\.fasta//g" <<< $NvNom)
+						echo -e "$OutputPrefix" >> SampleName.temp
+						grep -o "^>" $fichier | wc -l >> NumberOfSequences.temp
+			done
+			
+paste SampleName.temp NumberOfSequences.temp >  Suivi_Analyse/Suivi_ScriptConvertFasqFasta.txt
+
+rm *.temp
 
 
 echo -e "Heure du debut de l'analyse : $HeureDebut"

@@ -2,13 +2,13 @@
 
 #Nom du programme : VSEARCH_ChimereSingleton_Uniq.sh
 #Date de création : 10 novembre 2015
-#Derniere mise a jour : 1er mai 2017
+#Derniere mise a jour : 31 aout 2017
 #Auteur : Perrine Cruaud
 #But du programme : Lancer VSEARCH sur un fichier fasta (AllSamples_OTURepresent.fasta quand sortie SWARM et AllSamples_CentroidsVsearch.fasta quand sortie VSEARCH) avec paramètres par défault pour retirer les singletons (--derep_fulllength) 
 #puis retirer les chimères (--uchime_denovo) puis generation d'un tableau recapitulatif nombre de sequences par OTUs (ou Swarms) par echantillon (Resultats_ClustersOTUsVSEARCH_Glob_SsSingletons_FiltChim.txt pour clusterisation OTUs et 
 #Resultats_ClustersSwarms_Glob_SsSingletons_FiltChim.txt pour clusterisation Swarm)
 
-echo -e "\n###############################################\nDebutAnalyse\n###############################################" >  ResultatsSuivi_FiltSingletonsChim.txt
+echo -e "\n###############################################\nDebutAnalyse\n###############################################" >  Suivi_Analyse/ResultatsSuivi_FiltSingletonsChim.txt
 echo -e "\n###############################################\nDebutAnalyse\n###############################################"
 
 JourAnalyse=$(date +%d/%m/%Y)
@@ -16,12 +16,14 @@ echo -e "Date de l'analyse : $JourAnalyse"
 HeureDebut=$(date +%Hh%M)
 echo -e "Heure du debut de l'analyse : $HeureDebut"
 
+if [ -f "AllSamples_Dereplic_Resultats_ClustersOTUS97.txt" ]
+then
 echo -e "\n Analyse sur les OTUs... \n"
 
                 #Eliminer les singletons
-                (vsearch --derep_fulllength AllSamples_CentroidsVsearch.fasta --minuniquesize 2 --sizein --output AllSamples_CentroidsVsearch_SsSingletons.fasta) 2>> ResultatsSuivi_FiltSingletonsChim.txt
+                (vsearch --derep_fulllength AllSamples_CentroidsVsearch.fasta --minuniquesize 2 --sizein --output AllSamples_CentroidsVsearch_SsSingletons.fasta) 2>> Suivi_Analyse/ResultatsSuivi_FiltSingletonsChim.txt
                 #Eliminer les chimères
-                (vsearch --uchime_denovo AllSamples_CentroidsVsearch_SsSingletons.fasta --nonchimeras AllSamples_CentroidsVsearch_SsSingletons_FiltChim.fasta) 2>> ResultatsSuivi_FiltSingletonsChim.txt
+                (vsearch --uchime_denovo AllSamples_CentroidsVsearch_SsSingletons.fasta --nonchimeras AllSamples_CentroidsVsearch_SsSingletons_FiltChim.fasta) 2>> Suivi_Analyse/ResultatsSuivi_FiltSingletonsChim.txt
                 
                 #Recuperation des donnees issues de la clusterisation et recuperation des infos pour sequences conservees par l'etape de filtration singletons et chimeres 
                 sed -n '/>/p' AllSamples_CentroidsVsearch_SsSingletons_FiltChim.fasta > Entetes.temp
@@ -42,7 +44,7 @@ echo -e "\n Analyse sur les OTUs... \n"
 sed -i -e "s/ /;/g" TableauLong.csv
 sed -i -e "s/@@/;/g" TableauLong.csv
 
-R --slave -e 'source("/home/pcruaud/Programmes/Scripts_perso/FormatLongAFormatLarge.R")'
+R --slave -e 'source("/home/pcruaud/Programmes/Scripts_perso/GitHub/MiSeq_Multigenique/FormatLongAFormatLarge.R")'
 cp TableauLarge.csv Sauvegarde_TableauLarge0_OTUs.csv
 sed -i -e "s/\;NA/\;0/g" TableauLarge.csv
 sed -i -e "s/\"//g" TableauLarge.csv
@@ -56,15 +58,20 @@ rm TableauLong.csv
                 
 echo -e "Heure du debut de l'analyse : $HeureDebut"
 HeureFinOTUs=$(date +%Hh%M)
-echo -e "Heure de fin de l'etape de filtration pour OTUs : $HeureFinOTUs"             
-                
+echo -e "Heure de fin de l'etape de filtration pour OTUs : $HeureFinOTUs"
 
+else
+echo -e "\n Pas de clusterisation OTUs detectee\n"
+fi
+                
+if [ -f "AllSamples_Dereplic_Resultats_ClustersSWARMs.txt" ]
+then
 echo -e "\n Analyse sur les SWARMS... \n"
 
 		#Eliminer les singletons
-		(vsearch --derep_fulllength AllSamples_OTURepresent.fasta --minuniquesize 2 --sizein --output AllSamples_OTURepresent_SsSingletons.fasta) 2>> ResultatsSuivi_FiltSingletonsChim.txt
+		(vsearch --derep_fulllength AllSamples_OTURepresent.fasta --minuniquesize 2 --sizein --output AllSamples_OTURepresent_SsSingletons.fasta) 2>> Suivi_Analyse/ResultatsSuivi_FiltSingletonsChim.txt
                 #Eliminer les chimères
-		(vsearch --uchime_denovo AllSamples_OTURepresent_SsSingletons.fasta --nonchimeras AllSamples_OTURepresent_SsSingletons_FiltChim.fasta) 2>> ResultatsSuivi_FiltSingletonsChim.txt
+		(vsearch --uchime_denovo AllSamples_OTURepresent_SsSingletons.fasta --nonchimeras AllSamples_OTURepresent_SsSingletons_FiltChim.fasta) 2>> Suivi_Analyse/ResultatsSuivi_FiltSingletonsChim.txt
 
                 #Recuperation des donnees issues de la clusterisation et recuperation des infos pour sequences conservees par l'etape de filtration singletons et chimeres 
                 sed -n '/>/p' AllSamples_OTURepresent_SsSingletons_FiltChim.fasta > Entetes.temp
@@ -85,7 +92,7 @@ echo -e "\n Analyse sur les SWARMS... \n"
 sed -i -e "s/ /;/g" TableauLong.csv
 sed -i -e "s/@@/;/g" TableauLong.csv
 
-R --slave -e 'source("/home/pcruaud/Programmes/Scripts_perso/FormatLongAFormatLarge.R")'
+R --slave -e 'source("/home/pcruaud/Programmes/Scripts_perso/GitHub/MiSeq_Multigenique/FormatLongAFormatLarge.R")'
 cp TableauLarge.csv Sauvegarde_TableauLarge0_Swarms.csv
 sed -i -e "s/\;NA/\;0/g" TableauLarge.csv
 sed -i -e "s/\"//g" TableauLarge.csv
@@ -99,15 +106,19 @@ rm TableauLong.csv
 
 echo -e "\n"
 
+else
+echo -e "\n Pas de clusterisation SWARM detectee\n"
+fi
+
 echo -e "Heure du debut de l'analyse : $HeureDebut"
-echo -e "Heure du debut de l'analyse : $HeureDebut" >>  ResultatsSuivi_FiltSingletonsChim.txt
+echo -e "Heure du debut de l'analyse : $HeureDebut" >>  Suivi_Analyse/ResultatsSuivi_FiltSingletonsChim.txt
 HeureFin=$(date +%Hh%M)
 echo -e "Heure de fin de l'analyse : $HeureFin"
-echo -e "Heure de fin de l'analyse : $HeureFin"  >>  ResultatsSuivi_FiltSingletonsChim.txt
+echo -e "Heure de fin de l'analyse : $HeureFin"  >>  Suivi_Analyse/ResultatsSuivi_FiltSingletonsChim.txt
 
 echo -e "\n"
 
-echo -e "\n###############################################\nFinAnalyse\n###############################################" >>  ResultatsSuivi_FiltSingletonsChim.txt
+echo -e "\n###############################################\nFinAnalyse\n###############################################" >>  Suivi_Analyse/ResultatsSuivi_FiltSingletonsChim.txt
 echo -e "\n###############################################\nFinAnalyse\n###############################################"
 
 exit			

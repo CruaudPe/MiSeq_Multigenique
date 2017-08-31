@@ -67,7 +67,8 @@ sed -i -e "s/Fastq_Flash2Merge\///g" SampleName.temp
 sed -i -e "s/$FragmentName\/Fastq_MergeFlash2_TrimPrCutadapt\///g" SampleName.temp
 sed -i -e "1iSample_Name" SampleName.temp
 
-sed -n '/Reads written (passing filters)\:/p' $FragmentName/Suivi_Analyse/Resultats_Script_TrimPrCutadapt.txt > Sequences_Flash2.temp
+awk '/Reads written \(passing filters\)\:|No reads processed/ {print}' $FragmentName/Suivi_Analyse/Resultats_Script_TrimPrCutadapt.txt > Sequences_Flash2.temp
+sed -i -e "s/No reads processed.*$/0/g"  Sequences_Flash2.temp
 sed -i -e "s/Reads written (passing filters)\://g" Sequences_Flash2.temp
 sed -i -e "s/ (.*$//g" Sequences_Flash2.temp
 sed -i -e "s/ //g" Sequences_Flash2.temp
