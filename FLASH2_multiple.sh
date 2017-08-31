@@ -6,7 +6,7 @@
 #Auteur : Perrine Cruaud
 #But du programme : Lancer FLASH2 sur un ensemble de fichiers (contenu dans Fastq_Initiaux) avec paramètres par défault et max overlap à 300 bp
 
-echo -e "\n###############################################\nDebutAnalyse\n###############################################" > Suivi_Analyse/Resultats_ScriptFlash2.txt
+echo -e "\n###############################################\nDebutAnalyse\n###############################################" > Resultats_ScriptFlash2.txt
 echo -e "\n###############################################\nDebutAnalyse\n###############################################"
 
 mkdir Fastq_Flash2Merge
@@ -25,20 +25,20 @@ echo -e "\nVoici les fichiers traites : \n"
 
 for fichier in $(find Fastq_Initiaux/ -name "*_L001_R1_001.fastq" -type f)
 			do
-						echo -e "	$fichier" >> Suivi_Analyse/Resultats_ScriptFlash2.txt
+						echo -e "	$fichier" >> Resultats_ScriptFlash2.txt
 						echo -e "       $fichier"
 						Reads2=$(sed s/"L001_R1_001"/"L001_R2_001"/g <<< $fichier)
 						NvNom=$(sed s:'Fastq_Initiaux/':'':g <<< $fichier)
 						OutputPrefix=$(sed s/"_L001_R1_001"/""/g <<< $NvNom)
 						echo -e "$OutputPrefix" >> SampleName.temp
-						/home/pcruaud/Programmes/FLASH2-master/flash2 -M 350 -o $OutputPrefix -d Fastq_Flash2Merge/ $fichier $Reads2 >> Suivi_Analyse/Resultats_ScriptFlash2.txt
+						/home/pcruaud/Programmes/FLASH2-master/flash2 -M 350 -o $OutputPrefix -d Fastq_Flash2Merge/ $fichier $Reads2 >> Resultats_ScriptFlash2.txt
 			done
 
 
-sed -n '/\[FLASH\]     Combined pairs\:/p' Suivi_Analyse/Resultats_ScriptFlash2.txt > Combined_Pairs.temp
+sed -n '/\[FLASH\]     Combined pairs\:/p' Resultats_ScriptFlash2.txt > Combined_Pairs.temp
 sed -i -e "s/\[FLASH\]     Combined pairs\://g" Combined_Pairs.temp
 sed -i -e "1iCombined_Pairs_Flash2" Combined_Pairs.temp
-paste SampleName.temp Combined_Pairs.temp > Suivi_Analyse/Suivi_ScriptFlash2.txt
+paste SampleName.temp Combined_Pairs.temp > Suivi_ScriptFlash2.txt
 
 echo -e "\n"
 
@@ -51,7 +51,7 @@ echo -e "Heure de fin de l'analyse : $HeureFin"
 
 echo -e "\n"
 
-echo -e "\n###############################################\nFinAnalyse\n###############################################" >> Suivi_Analyse/Resultats_ScriptFlash2.txt
+echo -e "\n###############################################\nFinAnalyse\n###############################################" >> Resultats_ScriptFlash2.txt
 echo -e "\n###############################################\nFinAnalyse\n###############################################"
 
 exit
