@@ -29,7 +29,7 @@ for fichier in $(find Fastq_Initiaux/ -name "*_L001_R1_001.fastq" -type f)
 						echo -e "       $fichier"
 						Reads2=$(sed s/"L001_R1_001"/"L001_R2_001"/g <<< $fichier)
 						NvNom=$(sed s:'Fastq_Initiaux/':'':g <<< $fichier)
-						OutputPrefix=$(sed s/"_L001_R1_001"/""/g <<< $NvNom)
+						OutputPrefix=$(sed s/"_L001_R1_001.fastq"/""/g <<< $NvNom)
 						echo -e "$OutputPrefix" >> SampleName.temp
 						/home/pcruaud/Programmes/FLASH2-master/flash2 -M 350 -o $OutputPrefix -d Fastq_Flash2Merge/ $fichier $Reads2 >> Resultats_ScriptFlash2.txt
 			done
