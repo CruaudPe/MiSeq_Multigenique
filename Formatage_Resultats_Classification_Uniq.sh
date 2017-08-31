@@ -2,7 +2,7 @@
 
 #Nom du programme : Formatage_Resultats_Classification_Uniq.sh
 #Date de création : 18 novembre 2015
-#Derniere mise a jour : 1er mai 2017
+#Derniere mise a jour : 31 aout 2017
 #Auteur : Perrine Cruaud
 #But du programme : Formater les résultats issus de Classify.seqs de Mothur pour qu'ils soient lisibles pour tous les échantillons en meme temps. Il faut choisir le niveau taxonomique voulu a la ligne 52 du script
 
@@ -38,7 +38,7 @@ sed -i -e "s/(.)//g" Taxo.temp
 
 #Mise en forme bilan nbre de sequences par echantillon (transposition de la table)
 cp $FichierSeq TableATransposer.csv
-R --slave -e 'source("/home/pcruaud/Programmes/Scripts_perso/TranspositionTable.R")'
+R --slave -e 'source("/home/pcruaud/Programmes/Scripts_perso/GitHub/MiSeq_Multigenique/TranspositionTable.R")'
 sed -i -e '1d' TaxoTransposee.csv
 sed -i -e "s/\"//g" TaxoTransposee.csv
 sed -i -e "s/\s//g" TaxoTransposee.csv
