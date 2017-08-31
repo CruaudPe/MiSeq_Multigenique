@@ -12,6 +12,10 @@ Puis creer un sous-dossier Fastq_Initiaux qui va contenir les fichiers fastq bru
 
 `mkdir RUNX/Fastq_Initiaux`
 
+et un sous-dossier Suivi_Analyse qui va contenir les fichiers de suivi pour chaque etape
+
+`mkdir Suivi_Analyse`
+
 Copier tous les fichiers .fastq.gz dans ce sous-dossier et decompresser
 
 `gunzip Fastq_Initiaux/*`
