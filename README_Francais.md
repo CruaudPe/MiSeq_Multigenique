@@ -74,7 +74,7 @@ Pour chaque fragment sequence, creer un dossier dans RUNX portant le nom du frag
 
 `Chemin/du/Script/CUTADAPT_multiple.sh`
 
-*si besoin, modifier les parametres erreur -e et longueur minimum -m dans le script pour adapter au fragment etudie*
+*Au lancement, le programme demande de fixer les parametres de tolerance d'erreurs pour les amorces et pour la longueur minimale des sequences. Si parametres par default desires, indiquer 0.1 pour erreurs forward et reverse.*
 
 ## ETAPE 4 : Clusterisation en OTUs et en Swarm
 [Travail dans RUNX/FragmentSequence]
