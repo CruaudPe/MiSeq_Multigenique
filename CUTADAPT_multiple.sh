@@ -32,6 +32,16 @@ echo -e "Heure du debut de l'analyse : $HeureDebut" >> $FragmentName/Suivi_Analy
 
 mkdir $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt
 
+echo -e "\n\nErreurs tolerees pour l'amorce Forward (-e) : "
+read ForwardE
+
+echo -e "\nErreurs tolerees pour l'amorce Reverse (-e) : "
+read ReverseE
+
+echo -e "\nLongueur minimale toleree pour les sequences resultantes (-m) : "
+read ReverseM
+
+
 echo -e "\nVoici les fichiers traites : \n"
 
 Forward=$(sed -n '/Forward/p' $FragmentName/Caracteristiques_Amplicons.txt | sed s/'Forward '/''/g)
@@ -43,7 +53,7 @@ for fichier in $(find Fastq_Flash2Merge/ -name "*.extendedFrags.fastq" -type f)
 						echo -e "Sample:::$fichier" >> $FragmentName/Suivi_Analyse/Resultats_Script_TrimPrCutadapt.txt 
 						NvNom=$(sed s:'Fastq_Flash2Merge/':'':g <<< $fichier)
 						Output=$(sed s/".extendedFrags.fastq"/"_TrimForward.fastq"/g <<< $NvNom)
-						(cutadapt -g $Forward -e 0.1 --discard-untrimmed $fichier > $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt/$Output) 2>> $FragmentName/Suivi_Analyse/Resultats_Script_TrimPrCutadapt.txt
+						(cutadapt -g $Forward -e $ForwardE --discard-untrimmed $fichier > $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt/$Output) 2>> $FragmentName/Suivi_Analyse/Resultats_Script_TrimPrCutadapt.txt
 			done
 			
 echo -e "\n\n"
@@ -54,7 +64,7 @@ for fichier in $(find $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt/ -name "*_T
                                                 echo -e "Sample:::$fichier" >> $FragmentName/Suivi_Analyse/Resultats_Script_TrimPrCutadapt.txt 
 						NvNom=$(sed s/"$FragmentName\/Fastq_MergeFlash2_TrimPrCutadapt\/"/""/g <<< $fichier)
 						Output=$(sed s/"_TrimForward.fastq"/"_Trim_Filt200.fastq"/g <<< $NvNom)
-						(cutadapt -b $Reverse -e 0.2 -m 350 --discard-untrimmed $fichier > $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt/$Output) 2>> $FragmentName/Suivi_Analyse/Resultats_Script_TrimPrCutadapt.txt
+						(cutadapt -b $Reverse -e $ReverseE -m $ReverseM --discard-untrimmed $fichier > $FragmentName/Fastq_MergeFlash2_TrimPrCutadapt/$Output) 2>> $FragmentName/Suivi_Analyse/Resultats_Script_TrimPrCutadapt.txt
 			done
 			
 echo -e "\n\n"
