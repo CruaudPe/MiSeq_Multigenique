@@ -17,7 +17,7 @@ Copier tous les fichiers .fastq.gz dans ce sous-dossier et decompresser
 `gunzip Fastq_Initiaux/*`
 
 
-**NB :** Apres sequencage, on obtient 2 fichiers par echantillonm un fichier contenant les reads 1 (R1) et un fichier contentant les reads 2 (R2). Les fichier sont nommes avec le nom de l'echantillon et l'identifiant de l'echantillon comme indiques dans la Sample sheet. Le numero de la lane est toujours L001 pour le MiSeq.
+**NB :** Apres sequencage, on obtient 2 fichiers par echantillon, un fichier contenant les reads 1 (R1) et un fichier contenant les reads 2 (R2). Les fichier sont nommes avec le nom de l'echantillon et l'identifiant de l'echantillon comme indiques dans la Sample sheet. Le numero de la lane est toujours L001 pour le MiSeq.
 > SampleName_SampleID_LaneNumber_ReadNumer_001.fastq (ex : JRAS03221-0182_S183_L001_R1_001.fastq)
 
 Les echantillons sont numerotes a partir de 1. Les reads qui n'ont pas pu etre assignes a un echantillon se retrouvent dans des fichiers fastq numerotes 0
@@ -40,7 +40,7 @@ Dans un premier temps, on va regarder les resultats obtenus a l'issue du RUN
 
 `cat Fastq_Initiaux/*L001_R2_001.fastq > Bilan_Global/Global_Reads2.fastq`
 
-[Travail dans RUN1_UTE_IBIS/Bilan_Global]
+[Travail dans RUNX/Bilan_Global]
 
 `fastqc --extract Global.fastq`
 
@@ -51,6 +51,8 @@ Dans un premier temps, on va regarder les resultats obtenus a l'issue du RUN
 *ou en rajoutant le chemin pour aller chercher fastqc sur l'ordinateur*
 
 Generation du fichier Summary du RUN
+
+[Travail dans RUNX]
 
 `Chemin/du/Script/Summary_RunQuality.sh`
 *avec le bon chemin pour aller chercher le script*
@@ -63,7 +65,6 @@ Merge des reads avec Flash2 sur un ensemble  de fichiers contenus dans Fastq_Ini
 Resultats dans Fastq_Flash2Merge/
 
 `Chemin/du/Script/FLASH2_multiple.sh`
-
 *modifier le chemin d'acces a flash2 dans le script FLASH2_multiple.sh*
 
 
@@ -81,7 +82,7 @@ Pour chaque fragment sequence, creer un dossier dans RUNX portant le nom du frag
 
 *Si plusieurs analyses differentes dans le meme run, on peut creer un sous dossier pour chaque analyse et reunir les fichiers fastq correpondants (*_Trim_Filt200.fastq) dans un sous-dossier qu'on renommera Fastq_MergeFlash2_TrimPrCutadapt/*
 
-Dans le dossier RUNX ou le sous-dossier correspondant a une etude particuliere (ex : TestProtocole/), lancer le script ConvertFastqFasta.sh pour convertir les fichiers fastq en fichiers ConvertFastqFasta
+Dans le dossier RUNX ou le sous-dossier correspondant a une etude particuliere (ex : TestProtocole/), lancer le script ConvertFastqFasta.sh pour convertir les fichiers fastq en fichiers Fasta
 
 `Chemin/du/Script/ConvertFastqFasta.sh`
 
